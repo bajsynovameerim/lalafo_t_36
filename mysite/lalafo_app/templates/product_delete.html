@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить товар{% endblock %}
+{% block nav_prod %}active{% endblock %}
+
+{% block content %}
+<div class="form-card confirm">
+  <h1>Удалить товар?</h1>
+  <p class="sub">Вы точно хотите удалить «{{ object.product_name }}»? Это действие нельзя отменить.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-actions">
+      <a href="{% url 'product_detail' object.pk %}" class="btn-ghost">Отмена</a>
+      <button type="submit" class="btn-danger">Да, удалить</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

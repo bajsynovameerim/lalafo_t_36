@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.product_name }}{% endblock %}
+{% block nav_prod %}active{% endblock %}
+
+{% block content %}
+<a class="back" href="{% url 'product_list' %}">← Все товары</a>
+
+<div class="detail">
+  <div class="detail-img">
+    {% if product.product_image %}
+      <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
+    {% else %}
+      <div class="no-img">Нет фото</div>
+    {% endif %}
+  </div>
+
+  <div class="detail-info">
+    <span class="pill">{{ product.category.category_name }}</span>
+    <h1>{{ product.product_name }}</h1>
+    <div class="detail-price">{{ product.price }} сом</div>
+
+    <ul class="info-list">
+      <li>
+        <span class="label">Тип</span>
+        <span class="value">
+          {% if product.product_type %}<span class="tag tag-orig">Оригинал</span>
+          {% else %}<span class="tag tag-copy">Не оригинал</span>{% endif %}
+        </span>
+      </li>
+      <li><span class="label">Дата публикации</span><span class="value">{{ product.created_date|date:"d.m.Y" }}</span></li>
+    </ul>
+
+    <div class="desc">
+      <h3>Описание</h3>
+      <p>{{ product.descriptions }}</p>
+    </div>
+
+    <div class="seller">
+      <div class="avatar">{{ product.user|slice:":1"|upper }}</div>
+      <div>
+        <small>Продавец</small>
+        <strong>{{ product.user }}</strong>
+      </div>
+    </div>
+
+<div class="actions">
+  <a href="tel:{{ product.phone_number }}" class="btn">📞 Позвонить</a>
+  <a href="{% url 'product_update' product.pk %}" class="btn btn-edit">✏️ Редактировать</a>
+  <a href="{% url 'product_delete' product.pk %}" class="btn btn-delete">🗑 Удалить</a>
+  </div>
+</div>
+{% endblock %}

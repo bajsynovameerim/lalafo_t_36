@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Категории{% endblock %}
+{% block nav_cat %}active{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h1>Категории</h1>
+  <p class="sub">Выберите раздел</p>
+</div>
+
+{% if categories %}
+<div class="grid">
+  {% for category in categories %}
+  <a class="cat-tile" href="{% url 'product_list' %}">
+    <div class="cat-photo">
+      {% if category.category_image %}
+        <img src="{{ category.category_image.url }}" alt="{{ category.category_name }}">
+      {% else %}
+        <div class="no-img">Нет фото</div>
+      {% endif %}
+    </div>
+    <div class="cat-name">{{ category.category_name }}</div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <strong>Категорий пока нет</strong>
+  Добавьте их через админку.
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Редактировать товар{% else %}Добавить товар{% endif %}{% endblock %}
+{% block nav_prod %}active{% endblock %}
+
+{% block content %}
+<a href="{% url 'product_list' %}" class="back">← Назад к товарам</a>
+
+<div class="form-card">
+  <h1>{% if object %}Редактировать товар{% else %}Добавить товар{% endif %}</h1>
+  <p class="sub">Заполните данные, и объявление появится в списке</p>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-grid">
+      {% for field in form %}
+      <div class="field {% if field.name == 'descriptions' or field.name == 'product_image' %}full{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<div class="error">{{ field.errors|first }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="form-actions">
+      <a href="{% url 'product_list' %}" class="btn-ghost">Отмена</a>
+      <button type="submit" class="btn-main">Сохранить</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
